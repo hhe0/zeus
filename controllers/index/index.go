@@ -6,11 +6,11 @@ import (
 	"zeus/controllers/index/response"
 )
 
-type MainController struct {
+type Controller struct {
 	beego.Controller
 }
 
-func (c *MainController) Get() {
+func (c *Controller) Get() {
 	c.Data["json"] = apiresponse.SuccessResponse{
 		Data: response.GetIndexResponse{
 			Message: "Hello, Beego!",
