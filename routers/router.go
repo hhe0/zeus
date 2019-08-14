@@ -1,10 +1,10 @@
 package routers
 
 import (
-	"zeus/controllers"
 	"github.com/astaxie/beego"
+	"zeus/controllers/index"
 )
 
 func init() {
-    beego.Router("/", &controllers.MainController{})
+	beego.Router("/", &index.MainController{})
 }
