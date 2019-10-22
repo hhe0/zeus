@@ -8,8 +8,14 @@ type MainController struct {
 	beego.Controller
 }
 
+type TODOList struct {
+	Name string
+}
+
 func (c *MainController) Get() {
-	c.Data["Website"] = "beego.me"
-	c.Data["Email"] = "astaxie@gmail.com"
-	c.TplName = "index.tpl"
+	data := &TODOList{
+		Name: "何宏",
+	}
+	c.Data["json"] = data
+	c.ServeJSON()
 }

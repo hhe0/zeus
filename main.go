@@ -1,8 +1,8 @@
 package main
 
 import (
-	_ "zeus/routers"
 	"github.com/astaxie/beego"
+	_ "zeus/routers"
 )
 
 func main() {
