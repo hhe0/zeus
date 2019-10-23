@@ -2,10 +2,10 @@ package routers
 
 import (
 	"github.com/astaxie/beego"
-	"zeus/controllers/backend"
+	"zeus/api/backend/task/controller"
 )
 
 func init() {
-	// TODOList
-	beego.Router("/", &backend.TODOListController{})
+	// 任务清单
+	beego.Router("/api/backend/task-list", &controller.TaskController{}, "post:CreateTask") // 新增任务
 }
