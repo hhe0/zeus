@@ -9,6 +9,7 @@ type TaskInfo struct {
 	model.BaseModel
 	UserId     int    `json:"user_id"`
 	Content    string `json:"content"`
+	Status     int    `json:"status"`
 	FinishTime int    `json:"finish_time"`
 }
 

@@ -6,6 +6,5 @@ import (
 )
 
 func init() {
-	// 任务清单
 	beego.Router("/api/backend/task-list", &controller.TaskController{}, "post:CreateTask") // 新增任务
 }
