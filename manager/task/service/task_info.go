@@ -1,7 +1,7 @@
 package service
 
 import (
-	"zeus/manager/task/dao"
+	"zeus/manager/task/cache"
 	"zeus/manager/task/model"
 )
 
@@ -13,27 +13,27 @@ type TaskInfoService interface {
 }
 
 type taskInfoService struct {
-	TaskInfoDao dao.TaskInfoDao
+	TaskInfoCache cache.TaskInfoCache
 }
 
 func NewTaskInfoService() TaskInfoService {
 	return &taskInfoService{
-		TaskInfoDao: dao.NewTaskInfoDao(),
+		TaskInfoCache: cache.NewTaskInfoCache(),
 	}
 }
 
 func (svc taskInfoService) InsertInfo(info model.TaskInfo) int {
-	return svc.TaskInfoDao.InsertInfo(info)
+	return svc.TaskInfoCache.InsertInfo(info)
 }
 
 func (svc taskInfoService) GetTodayList(status int) (int, []model.TaskInfo) {
-	return svc.TaskInfoDao.GetTodayList(status)
+	return svc.TaskInfoCache.GetTodayList(status)
 }
 
 func (svc taskInfoService) UpdateStatus(id, status int) {
-	svc.TaskInfoDao.UpdateStatus(id, status)
+	svc.TaskInfoCache.UpdateStatus(id, status)
 }
 
 func (svc taskInfoService) DeleteInfo(id int) {
-	svc.TaskInfoDao.DeleteInfo(id)
+	svc.TaskInfoCache.DeleteInfo(id)
 }
