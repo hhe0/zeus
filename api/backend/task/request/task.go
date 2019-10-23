@@ -7,3 +7,8 @@ type CreateTaskRequest struct {
 type GetTaskListRequest struct {
 	Status int `form:"status"`
 }
+
+type UpdateTaskStatusRequest struct {
+	Id     int `json:"id"`
+	Status int `json:"status"`
+}

@@ -16,3 +16,19 @@ func GetCurrentTimestampInt() int {
 func GetCurrentTime() time.Time {
 	return time.Now()
 }
+
+// 获取当天的最小时间戳
+func GetTodayMinTimestamp() int {
+	t := time.Now()
+	year, month, day := t.Date()
+
+	return int(time.Date(year, month, day, 0, 0, 0, 0, t.Location()).Unix())
+}
+
+// 获取当天的最大时间戳
+func GetTodayMaxTimestamp() int {
+	t := time.Now()
+	year, month, day := t.Date()
+
+	return int(time.Date(year, month, day+1, 0, 0, 0, 0, t.Location()).Unix() - 1)
+}

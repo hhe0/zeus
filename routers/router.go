@@ -9,5 +9,7 @@ func init() {
 	// 新增任务
 	beego.Router("/api/backend/task", &controller.TaskController{}, "post:CreateTask")
 	// 任务列表
-	beego.Router("/api/backend/task-list", &controller.TaskController{}, "get:GetTaskList")
+	beego.Router("/api/backend/task/list", &controller.TaskController{}, "get:GetTaskList")
+	// 更改任务状态接口
+	beego.Router("/api/backend/task/status", &controller.TaskController{}, "patch:UpdateTaskStatus")
 }

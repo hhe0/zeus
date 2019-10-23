@@ -59,3 +59,21 @@ func (ctrl *TaskController) GetTaskList() {
 	}
 	ctrl.ServeJSON()
 }
+
+func (ctrl *TaskController) UpdateTaskStatus() {
+	var req request.UpdateTaskStatusRequest
+	if err := json.Unmarshal(ctrl.Ctx.Input.RequestBody, &req); err != nil {
+		ctrl.Data["json"] = response.CreateTaskResponse{
+			Code:    100001,
+			Message: "输入参数有误",
+		}
+		ctrl.ServeJSON()
+	}
+
+	service.NewTaskInfoService().UpdateStatus(req.Id, req.Status)
+	ctrl.Data["json"] = response.CreateTaskResponse{
+		Code:    0,
+		Message: "成功",
+	}
+	ctrl.ServeJSON()
+}
