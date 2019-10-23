@@ -3,6 +3,7 @@ package controller
 import (
 	"encoding/json"
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/validation"
 	"zeus/api/backend/task/request"
 	"zeus/api/backend/task/response"
 	"zeus/manager/task/model"
@@ -14,13 +15,16 @@ type TaskController struct {
 }
 
 func (ctrl *TaskController) CreateTask() {
-	// TODO: 数据校验做处理
-	var req request.CreateTaskRequest
-	if err := json.Unmarshal(ctrl.Ctx.Input.RequestBody, &req); err != nil {
-		// TODO: response做处理
+	var (
+		req       request.CreateTaskRequest
+		validator validation.Validation
+	)
+	_ = json.Unmarshal(ctrl.Ctx.Input.RequestBody, &req)
+	if _, err := validator.Valid(&req); err != nil {
+		// TODO: 校验失败的处理
 		ctrl.Data["json"] = response.CreateTaskResponse{
 			Code:    100001,
-			Message: "输入参数有误",
+			Message: "输入参数有误x",
 		}
 		ctrl.ServeJSON()
 	}

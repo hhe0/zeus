@@ -1,7 +1,7 @@
 package request
 
 type CreateTaskRequest struct {
-	Content string `json:"content"`
+	Content string `json:"content" valid:"Required"`
 }
 
 type GetTaskListRequest struct {

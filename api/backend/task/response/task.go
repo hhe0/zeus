@@ -3,7 +3,7 @@ package response
 import "zeus/manager/task/model"
 
 type CreateTaskResponse struct {
-	Code    int    `json:"code"`
+	Code    int    `json:"code" valid:"Required"`
 	Message string `json:"message"`
 }
 
