@@ -2,7 +2,6 @@ package controller
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/astaxie/beego"
 	"zeus/api/backend/task/request"
 	"zeus/api/backend/task/response"
@@ -14,10 +13,16 @@ type TaskController struct {
 	beego.Controller
 }
 
-func (ctr *TaskController) CreateTask() {
+func (ctrl *TaskController) CreateTask() {
+	// TODO: 数据校验做处理
 	var req request.CreateTaskRequest
-	if err := json.Unmarshal(ctr.Ctx.Input.RequestBody, &req); err != nil {
-		fmt.Println("error")
+	if err := json.Unmarshal(ctrl.Ctx.Input.RequestBody, &req); err != nil {
+		// TODO: response做处理
+		ctrl.Data["json"] = response.CreateTaskResponse{
+			Code:    100001,
+			Message: "输入参数有误",
+		}
+		ctrl.ServeJSON()
 	}
 
 	service.NewTaskInfoService().InsertInfo(model.TaskInfo{
@@ -26,9 +31,31 @@ func (ctr *TaskController) CreateTask() {
 		Content: req.Content,
 	})
 
-	ctr.Data["json"] = response.CreateTaskResponse{
+	ctrl.Data["json"] = response.CreateTaskResponse{
 		Code:    0,
-		Message: "新增成功",
+		Message: "成功",
 	}
-	ctr.ServeJSON()
+	ctrl.ServeJSON()
+}
+
+func (ctrl *TaskController) GetTaskList() {
+	status, err := ctrl.GetInt("status")
+	if err != nil {
+		ctrl.Data["json"] = response.CreateTaskResponse{
+			Code:    100001,
+			Message: "输入参数有误",
+		}
+		ctrl.ServeJSON()
+	}
+
+	total, data := service.NewTaskInfoService().GetTodayList(status)
+	ctrl.Data["json"] = response.GetTaskListResponse{
+		Code:    0,
+		Message: "成功",
+		Data: response.GetTaskListData{
+			Total:    total,
+			TaskList: data,
+		},
+	}
+	ctrl.ServeJSON()
 }

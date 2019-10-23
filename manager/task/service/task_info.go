@@ -7,6 +7,7 @@ import (
 
 type TaskInfoService interface {
 	InsertInfo(info model.TaskInfo) int
+	GetTodayList(status int) (int, []model.TaskInfo)
 }
 
 type taskInfoService struct {
@@ -21,4 +22,8 @@ func NewTaskInfoService() TaskInfoService {
 
 func (svc taskInfoService) InsertInfo(info model.TaskInfo) int {
 	return svc.TaskInfoDao.InsertInfo(info)
+}
+
+func (svc taskInfoService) GetTodayList(status int) (int, []model.TaskInfo) {
+	return svc.TaskInfoDao.GetTodayList(status)
 }
