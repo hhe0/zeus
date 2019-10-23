@@ -3,6 +3,7 @@ package dao
 import (
 	"fmt"
 	"github.com/astaxie/beego/orm"
+	enumCommon "zeus/common/enum"
 	"zeus/common/util"
 	"zeus/manager/task/enum"
 	"zeus/manager/task/model"
@@ -12,6 +13,7 @@ type TaskInfoDao interface {
 	InsertInfo(info model.TaskInfo) int
 	GetTodayList(status int) (int, []model.TaskInfo)
 	UpdateStatus(id, status int)
+	DeleteInfo(id int)
 }
 
 type taskInfoDao struct {
@@ -54,13 +56,13 @@ func (dao taskInfoDao) GetTodayList(status int) (int, []model.TaskInfo) {
 
 	// TODO: 待优化
 	if status == enum.TaskStatusAll {
-		taskTotal, err = dao.DB.QueryTable(model.TaskInfo{}.TableName()).Filter("create_time__gt ", todayMinTimestamp).Filter("create_time__lt", todayMaxTimstamp).All(&taskList)
+		taskTotal, err = dao.DB.QueryTable(model.TaskInfo{}.TableName()).Filter("create_time__gt ", todayMinTimestamp).Filter("create_time__lt", todayMaxTimstamp).Filter("is_deleted", 0).All(&taskList)
 		if err != nil {
 			// TODO: 记录日志
 			fmt.Println(err)
 		}
 	} else {
-		taskTotal, err = dao.DB.QueryTable(model.TaskInfo{}.TableName()).Filter("create_time__gt", todayMinTimestamp).Filter("create_time__lt", todayMaxTimstamp).Filter("status", status).All(&taskList)
+		taskTotal, err = dao.DB.QueryTable(model.TaskInfo{}.TableName()).Filter("create_time__gt", todayMinTimestamp).Filter("create_time__lt", todayMaxTimstamp).Filter("status", status).Filter("is_deleted", 0).All(&taskList)
 		if err != nil {
 			// TODO: 记录日志
 			fmt.Println(err)
@@ -76,6 +78,18 @@ func (dao taskInfoDao) UpdateStatus(id, status int) {
 	taskInfo.Id = id
 	if dao.DB.Read(&taskInfo) == nil {
 		taskInfo.Status = status
+		if _, err := dao.DB.Update(&taskInfo); err == nil {
+			fmt.Println(err)
+		}
+	}
+}
+
+func (dao taskInfoDao) DeleteInfo(id int) {
+	var taskInfo model.TaskInfo
+
+	taskInfo.Id = id
+	if dao.DB.Read(&taskInfo) == nil {
+		taskInfo.IsDeleted = enumCommon.IsDeletedYes
 		if _, err := dao.DB.Update(&taskInfo); err == nil {
 			fmt.Println(err)
 		}

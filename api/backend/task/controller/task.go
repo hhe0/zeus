@@ -77,3 +77,21 @@ func (ctrl *TaskController) UpdateTaskStatus() {
 	}
 	ctrl.ServeJSON()
 }
+
+func (ctrl *TaskController) DeleteTask() {
+	var req request.DeleteTaskRequest
+	if err := json.Unmarshal(ctrl.Ctx.Input.RequestBody, &req); err != nil {
+		ctrl.Data["json"] = response.CreateTaskResponse{
+			Code:    100001,
+			Message: "输入参数有误",
+		}
+		ctrl.ServeJSON()
+	}
+
+	service.NewTaskInfoService().DeleteInfo(req.Id)
+	ctrl.Data["json"] = response.CreateTaskResponse{
+		Code:    0,
+		Message: "成功",
+	}
+	ctrl.ServeJSON()
+}
