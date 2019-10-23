@@ -1,8 +1,10 @@
 package models
 
 import (
+	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func Init() {
@@ -11,12 +13,11 @@ func Init() {
 	dbuser := beego.AppConfig.String("dbuser")
 	dbpassword := beego.AppConfig.String("dbpassword")
 	dbname := beego.AppConfig.String("dbname")
-	if dbport == "" {
-		dbport = "3306"
-	}
 	dsn := dbuser + ":" + dbpassword + "@tcp(" + dbhost + ":" + dbport + ")/" + dbname + "?charset=utf8mb4&loc=Asia%2FShanghai"
-	_ = orm.RegisterDataBase("default", "mysql", dsn)
-	orm.RegisterModel(new(TODOList))
+	fmt.Println(dsn)
+
+	err := orm.RegisterDataBase("default", "mysql", dsn)
+	fmt.Println(err)
 }
 
 func TableName(str string) string {

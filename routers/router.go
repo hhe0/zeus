@@ -2,9 +2,10 @@ package routers
 
 import (
 	"github.com/astaxie/beego"
-	"zeus/controllers"
+	"zeus/controllers/backend"
 )
 
 func init() {
-	beego.Router("/", &controllers.MainController{})
+	// TODOList
+	beego.Router("/", &backend.TODOListController{})
 }

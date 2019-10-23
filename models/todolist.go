@@ -1,6 +1,8 @@
 package models
 
-type TODOList struct {
+import "github.com/astaxie/beego/orm"
+
+type TaskInfo struct {
 	Id         int    `json:"id"`
 	UserId     int    `json:"user_id"`
 	Content    string `json:"content"`
@@ -10,6 +12,12 @@ type TODOList struct {
 	IsDeleted  int    `json:"is_deleted"`
 }
 
-func (m *TODOList) TableName() string {
-	return TableName("todo_list")
+func init() {
+	Init()
+	orm.RegisterModel(new(TaskInfo))
+
+}
+
+func (TaskInfo) TableName() string {
+	return TableName("task_info")
 }
