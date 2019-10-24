@@ -2,15 +2,8 @@ package response
 
 import "zeus/manager/task/model"
 
-type CreateTaskResponse struct {
-	Code    int    `json:"code" valid:"Required"`
-	Message string `json:"message"`
-}
-
 type GetTaskListResponse struct {
-	Code    int             `json:"code"`
-	Message string          `json:"message"`
-	Data    GetTaskListData `json:"data"`
+	Data GetTaskListData `json:"data"`
 }
 
 type GetTaskListData struct {

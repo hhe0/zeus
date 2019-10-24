@@ -6,6 +6,8 @@ import (
 	"github.com/astaxie/beego/validation"
 	"zeus/api/backend/task/request"
 	"zeus/api/backend/task/response"
+	"zeus/common/apicode"
+	"zeus/common/http"
 	"zeus/manager/task/model"
 	"zeus/manager/task/service"
 )
@@ -22,10 +24,7 @@ func (ctrl *TaskController) CreateTask() {
 	_ = json.Unmarshal(ctrl.Ctx.Input.RequestBody, &req)
 	if _, err := validator.Valid(&req); err != nil {
 		// TODO: 校验失败的处理
-		ctrl.Data["json"] = response.CreateTaskResponse{
-			Code:    100001,
-			Message: "输入参数有误x",
-		}
+		ctrl.Data["json"] = http.Error(apicode.InputError)
 		ctrl.ServeJSON()
 	}
 
@@ -35,67 +34,47 @@ func (ctrl *TaskController) CreateTask() {
 		Content: req.Content,
 	})
 
-	ctrl.Data["json"] = response.CreateTaskResponse{
-		Code:    0,
-		Message: "成功",
-	}
+	ctrl.Data["json"] = http.Success()
 	ctrl.ServeJSON()
 }
 
 func (ctrl *TaskController) GetTaskList() {
 	status, err := ctrl.GetInt("status")
 	if err != nil {
-		ctrl.Data["json"] = response.CreateTaskResponse{
-			Code:    100001,
-			Message: "输入参数有误",
-		}
+		ctrl.Data["json"] = http.Error(apicode.InputError)
 		ctrl.ServeJSON()
 	}
 
 	total, data := service.NewTaskInfoService().GetTodayList(status)
-	ctrl.Data["json"] = response.GetTaskListResponse{
-		Code:    0,
-		Message: "成功",
+	ctrl.Data["json"] = http.Success(response.GetTaskListResponse{
 		Data: response.GetTaskListData{
 			Total:    total,
 			TaskList: data,
 		},
-	}
+	})
 	ctrl.ServeJSON()
 }
 
 func (ctrl *TaskController) UpdateTaskStatus() {
 	var req request.UpdateTaskStatusRequest
 	if err := json.Unmarshal(ctrl.Ctx.Input.RequestBody, &req); err != nil {
-		ctrl.Data["json"] = response.CreateTaskResponse{
-			Code:    100001,
-			Message: "输入参数有误",
-		}
+		ctrl.Data["json"] = http.Error(apicode.InputError)
 		ctrl.ServeJSON()
 	}
 
 	service.NewTaskInfoService().UpdateStatus(req.Id, req.Status)
-	ctrl.Data["json"] = response.CreateTaskResponse{
-		Code:    0,
-		Message: "成功",
-	}
+	ctrl.Data["json"] = http.Success()
 	ctrl.ServeJSON()
 }
 
 func (ctrl *TaskController) DeleteTask() {
 	var req request.DeleteTaskRequest
 	if err := json.Unmarshal(ctrl.Ctx.Input.RequestBody, &req); err != nil {
-		ctrl.Data["json"] = response.CreateTaskResponse{
-			Code:    100001,
-			Message: "输入参数有误",
-		}
+		ctrl.Data["json"] = http.Error(apicode.InputError)
 		ctrl.ServeJSON()
 	}
 
 	service.NewTaskInfoService().DeleteInfo(req.Id)
-	ctrl.Data["json"] = response.CreateTaskResponse{
-		Code:    0,
-		Message: "成功",
-	}
+	ctrl.Data["json"] = http.Success()
 	ctrl.ServeJSON()
 }
