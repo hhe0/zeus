@@ -14,4 +14,7 @@ func init() {
 	beego.Router("/api/backend/task/status", &controller.TaskController{}, "patch:UpdateTaskStatus")
 	// 删除任务
 	beego.Router("/api/backend/task", &controller.TaskController{}, "delete:DeleteTask")
+
+	// 测试用路由
+	beego.Router("/api/backend/hello", &controller.TestController{}, "get:TestHelloWorld")
 }
