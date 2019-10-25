@@ -6,7 +6,7 @@ import (
 )
 
 type TaskInfoService interface {
-	InsertInfo(info model.TaskInfo) int
+	InsertInfo(userId int, content string) int
 	GetTodayList(status int) (int, []model.TaskInfo)
 	UpdateStatus(id, status int)
 	DeleteInfo(id int)
@@ -22,8 +22,8 @@ func NewTaskInfoService() TaskInfoService {
 	}
 }
 
-func (svc taskInfoService) InsertInfo(info model.TaskInfo) int {
-	return svc.TaskInfoCache.InsertInfo(info)
+func (svc taskInfoService) InsertInfo(userId int, content string) int {
+	return svc.TaskInfoCache.InsertInfo(userId, content)
 }
 
 func (svc taskInfoService) GetTodayList(status int) (int, []model.TaskInfo) {

@@ -11,7 +11,7 @@ import (
 )
 
 type TaskInfoDao interface {
-	InsertInfo(info model.TaskInfo) int
+	InsertInfo(userId int, content string) int
 	GetTodayList(status int) (int, []model.TaskInfo)
 	UpdateStatus(id, status int)
 	DeleteInfo(id int)
@@ -29,10 +29,10 @@ func NewTaskInfoDao() TaskInfoDao {
 	}
 }
 
-func (dao taskInfoDao) InsertInfo(info model.TaskInfo) int {
+func (dao taskInfoDao) InsertInfo(userId int, content string) int {
 	taskInfo := model.TaskInfo{
-		UserId:  info.UserId,
-		Content: info.Content,
+		UserId:  userId,
+		Content: content,
 		Status:  enum.TaskStatusNo,
 	}
 	taskInfo.CreateTime = util.GetCurrentTimestampInt()

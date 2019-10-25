@@ -6,7 +6,7 @@ import (
 )
 
 type TaskInfoCache interface {
-	InsertInfo(info model.TaskInfo) int
+	InsertInfo(userId int, content string) int
 	GetTodayList(status int) (int, []model.TaskInfo)
 	UpdateStatus(id, status int)
 	DeleteInfo(id int)
@@ -22,8 +22,8 @@ func NewTaskInfoCache() TaskInfoCache {
 	}
 }
 
-func (cache taskInfoCache) InsertInfo(info model.TaskInfo) int {
-	return cache.TaskInfoDao.InsertInfo(info)
+func (cache taskInfoCache) InsertInfo(userId int, content string) int {
+	return cache.TaskInfoDao.InsertInfo(userId, content)
 }
 
 func (cache taskInfoCache) GetTodayList(status int) (int, []model.TaskInfo) {
