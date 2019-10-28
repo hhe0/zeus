@@ -1,11 +1,8 @@
 package controller
 
 import (
-	"encoding/json"
-	"zeus/api/backend/task/request"
-	"zeus/common/apicode"
 	"zeus/common/controller"
-	"zeus/manager/task/service"
+	"zeus/common/util"
 )
 
 type EmailController struct {
@@ -13,12 +10,19 @@ type EmailController struct {
 }
 
 func (ctrl *EmailController) SendEmail() {
-	var req request.UpdateTaskStatusRequest
-	if err := json.Unmarshal(ctrl.Ctx.Input.RequestBody, &req); err != nil {
-		ctrl.Error(apicode.InputError)
-	}
+	//var (
+	//	req       request.CreateTaskRequest
+	//	validator validation.Validation
+	//)
+	//_ = json.Unmarshal(ctrl.Ctx.Input.RequestBody, &req)
+	//if checkPass, err := validator.Valid(&req); err != nil || !checkPass {
+	//	ctrl.Error(apicode.InputError)
+	//}
 
-	service.NewTaskInfoService().UpdateStatus(req.Id, req.Status)
+	err := util.SendMail("hhe_minc@126.com", "找回密码", "测试发送邮件", "")
+	if err != nil {
+		return
+	}
 
 	ctrl.Success()
 }

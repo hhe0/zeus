@@ -2,6 +2,7 @@ package routers
 
 import (
 	"github.com/astaxie/beego"
+	controllerEmail "zeus/api/backend/email/controller"
 	"zeus/api/backend/task/controller"
 )
 
@@ -16,5 +17,5 @@ func init() {
 	beego.Router("/api/backend/task", &controller.TaskController{}, "delete:DeleteTask")
 
 	// 用户发送邮件提醒
-	//beego.Router("/api/backend/email/send", &controller.TaskController{}, "POST:SendEmail")
+	beego.Router("/api/backend/email/send", &controllerEmail.EmailController{}, "POST:SendEmail")
 }
