@@ -54,16 +54,16 @@ func (dao taskInfoDao) GetTodayList(status int) (int, []model.TaskInfo) {
 	)
 
 	todayMinTimestamp := util.GetTodayMinTimestamp()
-	todayMaxTimstamp := util.GetTodayMaxTimestamp()
+	todayMaxTimestamp := util.GetTodayMaxTimestamp()
 
 	// TODO: 待优化
 	if status == enum.TaskStatusAll {
-		taskTotal, err = dao.DB.QueryTable(model.TaskInfo{}.TableName()).Filter("create_time__gt ", todayMinTimestamp).Filter("create_time__lt", todayMaxTimstamp).Filter("is_deleted", 0).All(&taskList)
+		taskTotal, err = dao.DB.QueryTable(model.TaskInfo{}.TableName()).Filter("create_time__gt ", todayMinTimestamp).Filter("create_time__lt", todayMaxTimestamp).Filter("is_deleted", 0).All(&taskList)
 		if err != nil {
 			dao.Logger.Println(err)
 		}
 	} else {
-		taskTotal, err = dao.DB.QueryTable(model.TaskInfo{}.TableName()).Filter("create_time__gt", todayMinTimestamp).Filter("create_time__lt", todayMaxTimstamp).Filter("status", status).Filter("is_deleted", 0).All(&taskList)
+		taskTotal, err = dao.DB.QueryTable(model.TaskInfo{}.TableName()).Filter("create_time__gt", todayMinTimestamp).Filter("create_time__lt", todayMaxTimestamp).Filter("status", status).Filter("is_deleted", 0).All(&taskList)
 		if err != nil {
 			dao.Logger.Println(err)
 		}

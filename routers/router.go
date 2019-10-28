@@ -15,6 +15,6 @@ func init() {
 	// 删除任务
 	beego.Router("/api/backend/task", &controller.TaskController{}, "delete:DeleteTask")
 
-	// 测试用路由
-	beego.Router("/api/backend/hello", &controller.TestController{}, "get:TestHelloWorld")
+	// 用户发送邮件提醒
+	//beego.Router("/api/backend/email/send", &controller.TaskController{}, "POST:SendEmail")
 }
