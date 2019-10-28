@@ -20,7 +20,7 @@ func (ctrl *TaskController) CreateTask() {
 		validator validation.Validation
 	)
 	_ = json.Unmarshal(ctrl.Ctx.Input.RequestBody, &req)
-	if _, err := validator.Valid(&req); err != nil {
+	if checkPass, err := validator.Valid(&req); err != nil || !checkPass {
 		ctrl.Error(apicode.InputError)
 	}
 

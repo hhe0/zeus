@@ -19,11 +19,11 @@ func (ctrl *BaseController) Success(data ...interface{}) {
 	ctrl.ServeJSON()
 }
 
-func (ctrl *BaseController) Error(code apicode.APICode, data ...interface{}) {
+func (ctrl *BaseController) Error(code apicode.APICode) {
 	ctrl.Data["json"] = http.APIResponse{
 		Code:    code.Code,
 		Message: code.Message,
-		Data:    data,
+		Data:    map[string]interface{}{},
 	}
 	ctrl.ServeJSON()
 }
