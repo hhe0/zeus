@@ -13,7 +13,7 @@ type UserController struct {
 func (ctrl *UserController) UserLogin() {
 	ctrl.Data["json"] = http.APIResponse{
 		Code: 20000,
-		Data: "212341212",
+		Data: "admin-token",
 	}
 	ctrl.ServeJSON()
 }
@@ -23,7 +23,7 @@ func (ctrl *UserController) GetUserInfo() {
 	ctrl.Data["json"] = http.APIResponse{
 		Code: 20000,
 		Data: response.GetUserInfoResponse{
-			Roles:        "editor",
+			Roles:        "admin",
 			Introduction: "I am an editor",
 			Avatar:       "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
 			Name:         "Normal Editor",
