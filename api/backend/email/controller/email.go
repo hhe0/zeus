@@ -10,19 +10,12 @@ type EmailController struct {
 }
 
 func (ctrl *EmailController) SendEmail() {
-	//var (
-	//	req       request.CreateTaskRequest
-	//	validator validation.Validation
-	//)
-	//_ = json.Unmarshal(ctrl.Ctx.Input.RequestBody, &req)
-	//if checkPass, err := validator.Valid(&req); err != nil || !checkPass {
-	//	ctrl.Error(apicode.InputError)
-	//}
-
-	err := util.SendMail("hhe_minc@126.com", "找回密码", "测试发送邮件", "")
-	if err != nil {
-		return
-	}
+	util.SendMail(util.Mail{
+		To:       "hhe_minc@126.com",
+		Subject:  "找回密码",
+		Body:     "测试发送邮件",
+		MailType: "html",
+	})
 
 	ctrl.Success()
 }
