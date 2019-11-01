@@ -22,4 +22,6 @@ func init() {
 
 	// TODO: 用户登录
 	beego.Router("/api/backend/user/login", &controllerUser.UserController{}, "POST:UserLogin")
+	// TODO: 获取用户信息
+	beego.Router("/api/backend/user/info", &controllerUser.UserController{}, "GET:GetUserInfo")
 }

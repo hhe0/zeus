@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"zeus/api/backend/user/response"
 	"zeus/common/controller"
 	"zeus/common/http"
 )
@@ -13,6 +14,20 @@ func (ctrl *UserController) UserLogin() {
 	ctrl.Data["json"] = http.APIResponse{
 		Code: 20000,
 		Data: "212341212",
+	}
+	ctrl.ServeJSON()
+}
+
+func (ctrl *UserController) GetUserInfo() {
+	//roles, name, avatar, introduction
+	ctrl.Data["json"] = http.APIResponse{
+		Code: 20000,
+		Data: response.GetUserInfoResponse{
+			Roles:        "editor",
+			Introduction: "I am an editor",
+			Avatar:       "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
+			Name:         "Normal Editor",
+		},
 	}
 	ctrl.ServeJSON()
 }
