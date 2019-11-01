@@ -4,6 +4,7 @@ import (
 	"github.com/astaxie/beego"
 	controllerEmail "zeus/api/backend/email/controller"
 	"zeus/api/backend/task/controller"
+	controllerUser "zeus/api/backend/user/controller"
 )
 
 func init() {
@@ -18,4 +19,7 @@ func init() {
 
 	// 用户发送邮件提醒
 	beego.Router("/api/backend/email/send", &controllerEmail.EmailController{}, "POST:SendEmail")
+
+	// TODO: 用户登录
+	beego.Router("/api/backend/user/login", &controllerUser.UserController{}, "POST:UserLogin")
 }
