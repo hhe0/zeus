@@ -11,12 +11,19 @@ type BaseController struct {
 }
 
 func (ctrl *BaseController) Success(data ...interface{}) {
-	ctrl.Data["json"] = http.APIResponse{
+	var response http.APIResponse
+	response = http.APIResponse{
 		Code:    apicode.APISuccessCode.Code,
 		Message: apicode.APISuccessCode.Message,
-		// TODO: 可优化
-		Data: data[0],
 	}
+
+	if len(data) > 0 {
+		response.Data = data[0]
+	} else {
+		response.Data = map[string]interface{}{}
+	}
+
+	ctrl.Data["json"] = response
 	ctrl.ServeJSON()
 }
 
