@@ -25,7 +25,7 @@ func (ctrl *TaskController) CreateTask() {
 	}
 
 	// TODO: user_id 需要在 token 中进行获取
-	//service.NewTaskInfoService().InsertInfo(1, req.Content)
+	service.NewTaskInfoService().InsertInfo(1, req.Content)
 
 	ctrl.Success()
 }
