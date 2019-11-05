@@ -13,7 +13,9 @@ type UserController struct {
 func (ctrl *UserController) UserLogin() {
 	ctrl.Data["json"] = http.APIResponse{
 		Code: 20000,
-		Data: "admin-token",
+		Data: response.UserLoginResponse{
+			Token: "1995",
+		},
 	}
 	ctrl.ServeJSON()
 }
