@@ -14,7 +14,8 @@ func (ctrl *BaseController) Success(data ...interface{}) {
 	ctrl.Data["json"] = http.APIResponse{
 		Code:    apicode.APISuccessCode.Code,
 		Message: apicode.APISuccessCode.Message,
-		Data:    data,
+		// TODO: 可优化
+		Data: data[0],
 	}
 	ctrl.ServeJSON()
 }
