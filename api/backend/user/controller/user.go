@@ -33,3 +33,7 @@ func (ctrl *UserController) GetUserInfo() {
 	}
 	ctrl.ServeJSON()
 }
+
+func (ctrl *UserController) UserLogOut() {
+	ctrl.Success()
+}
